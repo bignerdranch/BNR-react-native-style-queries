@@ -6,8 +6,8 @@ function useStyleQueries(styleConfig) {
       const styleArray = styleObjectOrArray;
       if (styleArray.length === 0) {
         flattenedStyleObject = {};
-      } else if (styleArray.length === 2) {
-        flattenedStyleObject = {...styleArray[0], ...styleArray[1]};
+      } else if (styleArray.length > 1) {
+        flattenedStyleObject = Object.assign({}, ...styleArray);
       } else {
         flattenedStyleObject = styleArray[0];
       }

@@ -6,7 +6,12 @@ function useStyleQueries(styleConfig) {
       const styleArray = styleObjectOrArray;
       const styleObjectArray = styleArray.map(element => {
         if (Array.isArray(element)) {
-          return null;
+          const [predicate, conditionalStyleObject] = element;
+          if (predicate()) {
+            return conditionalStyleObject;
+          } else {
+            return null;
+          }
         } else {
           return element;
         }

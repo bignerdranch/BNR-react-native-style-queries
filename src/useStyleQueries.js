@@ -1,3 +1,5 @@
-function useStyleQueries() {}
+function useStyleQueries() {
+  return {};
+}
 
 module.exports = useStyleQueries;

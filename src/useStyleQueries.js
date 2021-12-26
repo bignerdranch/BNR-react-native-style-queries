@@ -1,11 +1,13 @@
 function useStyleQueries(styleConfig) {
   const entries = Object.entries(styleConfig);
   const transformedEntries = entries.map(([key, value]) => {
+    let updatedValue;
     if (Array.isArray(value)) {
-      return [key, {}];
+      updatedValue = {};
     } else {
-      return [key, value];
+      updatedValue = value;
     }
+    return [key, updatedValue];
   });
   const result = Object.fromEntries(transformedEntries);
   return result;

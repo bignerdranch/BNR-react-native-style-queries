@@ -100,5 +100,17 @@ describe('useStyleQueries', () => {
         });
       });
     });
+
+    describe('when the condition is true', () => {
+      it("returns the query's style object", () => {
+        const input = {
+          myComponent: [[() => true, {color: 'green'}]],
+        };
+        const result = useStyleQueries(input);
+        expect(result).toEqual({
+          myComponent: {color: 'green'},
+        });
+      });
+    });
   });
 });

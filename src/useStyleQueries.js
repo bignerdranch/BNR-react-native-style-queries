@@ -6,20 +6,10 @@ function useStyleQueries(styleConfig) {
 
   return mapPropertyValues(styleConfig, styleObjectOrArray => {
     if (Array.isArray(styleObjectOrArray)) {
-      const styleArray = styleObjectOrArray;
-      const styleObjectArray = styleArray.map(element => {
-        if (Array.isArray(element)) {
-          const [predicate, conditionalStyleObject] = element;
-          if (predicate(predicateArgument)) {
-            return conditionalStyleObject;
-          } else {
-            return null;
-          }
-        } else {
-          return element;
-        }
+      return flattenStyleArray({
+        styleArray: styleObjectOrArray,
+        predicateArgument,
       });
-      return Object.assign({}, ...styleObjectArray);
     } else {
       return styleObjectOrArray;
     }
@@ -33,6 +23,22 @@ function mapPropertyValues(object, mapFunction) {
     mapFunction(value),
   ]);
   return Object.fromEntries(transformedEntries);
+}
+
+function flattenStyleArray({styleArray, predicateArgument}) {
+  const styleObjectArray = styleArray.map(element => {
+    if (Array.isArray(element)) {
+      const [predicate, conditionalStyleObject] = element;
+      if (predicate(predicateArgument)) {
+        return conditionalStyleObject;
+      } else {
+        return null;
+      }
+    } else {
+      return element;
+    }
+  });
+  return Object.assign({}, ...styleObjectArray);
 }
 
 module.exports = useStyleQueries;

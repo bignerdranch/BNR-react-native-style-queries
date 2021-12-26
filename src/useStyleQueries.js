@@ -4,11 +4,7 @@ function useStyleQueries(styleConfig) {
     let flattenedStyleObject;
     if (Array.isArray(styleObjectOrArray)) {
       const styleArray = styleObjectOrArray;
-      if (styleArray.length === 0) {
-        flattenedStyleObject = {};
-      } else if (styleArray.length >= 1) {
-        flattenedStyleObject = Object.assign({}, ...styleArray);
-      }
+      flattenedStyleObject = Object.assign({}, ...styleArray);
     } else {
       const styleObject = styleObjectOrArray;
       flattenedStyleObject = styleObject;

@@ -4,8 +4,7 @@ function useStyleQueries(styleConfig) {
   const {width} = useWindowDimensions();
   const predicateArgument = {screenWidth: width};
 
-  const entries = Object.entries(styleConfig);
-  const transformedEntries = entries.map(([styleName, styleObjectOrArray]) => {
+  return mapPropertyValues(styleConfig, styleObjectOrArray => {
     let flattenedStyleObject;
     if (Array.isArray(styleObjectOrArray)) {
       const styleArray = styleObjectOrArray;
@@ -26,8 +25,16 @@ function useStyleQueries(styleConfig) {
       const styleObject = styleObjectOrArray;
       flattenedStyleObject = styleObject;
     }
-    return [styleName, flattenedStyleObject];
+    return flattenedStyleObject;
   });
+}
+
+function mapPropertyValues(object, mapFunction) {
+  const entries = Object.entries(object);
+  const transformedEntries = entries.map(([key, value]) => [
+    key,
+    mapFunction(value),
+  ]);
   return Object.fromEntries(transformedEntries);
 }
 

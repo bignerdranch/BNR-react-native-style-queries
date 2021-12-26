@@ -1,4 +1,9 @@
+const {useWindowDimensions} = require('react-native');
+
 function useStyleQueries(styleConfig) {
+  const {width} = useWindowDimensions();
+  const predicateArgument = {screenWidth: width};
+
   const entries = Object.entries(styleConfig);
   const transformedEntries = entries.map(([styleName, styleObjectOrArray]) => {
     let flattenedStyleObject;
@@ -7,7 +12,7 @@ function useStyleQueries(styleConfig) {
       const styleObjectArray = styleArray.map(element => {
         if (Array.isArray(element)) {
           const [predicate, conditionalStyleObject] = element;
-          if (predicate()) {
+          if (predicate(predicateArgument)) {
             return conditionalStyleObject;
           } else {
             return null;

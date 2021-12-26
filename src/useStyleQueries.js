@@ -5,7 +5,6 @@ function useStyleQueries(styleConfig) {
   const predicateArgument = {screenWidth: width};
 
   return mapPropertyValues(styleConfig, styleObjectOrArray => {
-    let flattenedStyleObject;
     if (Array.isArray(styleObjectOrArray)) {
       const styleArray = styleObjectOrArray;
       const styleObjectArray = styleArray.map(element => {
@@ -20,12 +19,10 @@ function useStyleQueries(styleConfig) {
           return element;
         }
       });
-      flattenedStyleObject = Object.assign({}, ...styleObjectArray);
+      return Object.assign({}, ...styleObjectArray);
     } else {
-      const styleObject = styleObjectOrArray;
-      flattenedStyleObject = styleObject;
+      return styleObjectOrArray;
     }
-    return flattenedStyleObject;
   });
 }
 
